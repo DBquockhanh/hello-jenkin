@@ -2,22 +2,17 @@ pipeline {
     agent any
 
     
-  tools {nodejs "24.2.0"}
 
 stages {
-        stage('Build') {
+        stage('Clone stage') {
             steps {
-                sh 'npm install'
+                  withDockerRegistry(url: 'http://localhost:5000') {
+                    sh label: '',script: 'docker build -t test:latest .'
+                    sh label: '',script: 'docker image push test:latest'
+    // some block
+}
             }
         }
-        stage('Deliver') { 
-            steps {
-                sh 'chmod +x ./jenkins/scripts/deliver.sh'
-                sh 'chmod +x ./jenkins/scripts/kill.sh'
-                sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
-                sh './jenkins/scripts/kill.sh'
-            }
-        }
+
     }
 }
