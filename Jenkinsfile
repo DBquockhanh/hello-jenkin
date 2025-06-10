@@ -12,6 +12,7 @@ stages {
         }
         stage('Test') { 
             steps {
+                sh 'chmod +x ./jenkins/scripts/test.sh'
                 sh './jenkins/scripts/test.sh' 
             }
         }
