@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                    withDockerRegistry([credentialsId: '305d6b1d-8b3a-4cd7-a005-2498ea63b75d', url: 'https://index.docker.io/v1/']) {
+                    withDockerRegistry([credentialsId: '305d6b1d-8b3a-4cd7-a005-2498ea63b75d', url: 'http://localhost:5000']) {
         echo "Hello"
     }
             }
