@@ -8,7 +8,13 @@ pipeline {
     }
 
     stages {
+                stage('echo') {
+            steps {
+                // sh "export PATH=/usr/local/bin:$PATH"
+                sh "echo $PATH"
+                }
 
+            }
         
 
         stage('Checkout') {
