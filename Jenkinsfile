@@ -1,8 +1,5 @@
 pipeline {
     agent any
-tools {
-        docker 'docker' 
-    }
     environment {
         REGISTRY = "localhost:5000"
         IMAGE_NAME = "test"
