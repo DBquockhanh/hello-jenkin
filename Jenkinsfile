@@ -12,6 +12,7 @@ pipeline {
         stage("verify tooling"){
             steps{
                 sh '''
+                chmod 777 /var/jenkins_home/workspace/hello-world@tmp/durable-61c18086/script.sh.copy
                 docker info
                 docker version
                 '''
