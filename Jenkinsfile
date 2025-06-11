@@ -8,7 +8,7 @@ pipeline {
     }
 
     stages {
-                stage('Checkout') {
+                stage('echo') {
             steps {
                 sh "echo $PATH"
                 }
