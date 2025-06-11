@@ -11,9 +11,11 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                    docker.withRegistry('http://localhost:5000', 'docker-agent') {
+                script{                    docker.withRegistry('http://localhost:5000', 'docker-agent') {
         echo "Hello"
     }
+                }
+
             }
         }
 
