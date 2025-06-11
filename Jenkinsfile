@@ -8,6 +8,14 @@ pipeline {
     }
 
     stages {
+                stage('Checkout') {
+            steps {
+                sh "echo $PATH"
+                }
+
+            }
+        }
+
         stage('Checkout') {
             steps {
                 script{                    docker.withRegistry('http://localhost:5000', '3d0ab19b-ea12-4295-bce8-29f1a406d298') {
