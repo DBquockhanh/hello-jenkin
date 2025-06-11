@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                    docker.withDockerRegistry([credentialsId: '3d0ab19b-ea12-4295-bce8-29f1a406d298', url: 'http://localhost:5000']) {
+                    docker.withRegistry('http://localhost:5000', 'docker-agent') {
         echo "Hello"
     }
             }
