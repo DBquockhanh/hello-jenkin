@@ -3,31 +3,49 @@ pipeline {
 
     environment {
         REGISTRY = "localhost:5000"
-        IMAGE = "myapp"
-        TAG = "latest"
+        IMAGE_NAME = "test"
+        IMAGE_TAG = "latest"
+        FULL_IMAGE = "${REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
     }
 
     stages {
-        stage('Build') {
+        stage('Checkout') {
             steps {
-                bat "docker build -t %REGISTRY%/%IMAGE%:%TAG% ."
+                checkout scm
             }
         }
 
-        stage('Login') {
+        stage('Build Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: '	305d6b1d-8b3a-4cd7-a005-2498ea63b75d', usernameVariable: 'admin', passwordVariable: 'admin')]) {
-                    bat """
-                        echo %DOCKER_PASS% | docker login %REGISTRY% --username %DOCKER_USER% --password-stdin
-                    """
+                script {
+                    docker.build("${IMAGE_NAME}", ".")
                 }
             }
         }
 
-        stage('Push') {
+        stage('Login to Registry') {
             steps {
-                bat "docker push %REGISTRY%/%IMAGE%:%TAG%"
+                withCredentials([usernamePassword(credentialsId: '	305d6b1d-8b3a-4cd7-a005-2498ea63b75d', usernameVariable: 'admin', passwordVariable: 'admin')]) {
+                    sh 'echo $DOCKER_PASS | docker login $REGISTRY -u $DOCKER_USER --password-stdin'
+                }
             }
+        }
+
+        stage('Tag and Push') {
+            steps {
+                script {
+                    sh """
+                        docker tag ${IMAGE_NAME} ${FULL_IMAGE}
+                        docker push ${FULL_IMAGE}
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            sh 'docker logout $REGISTRY'
         }
     }
 }
