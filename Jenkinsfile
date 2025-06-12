@@ -20,13 +20,10 @@ pipeline {
         stage('Checkout') {
             steps {
                 script{
-docker.withRegistry('http://localhost:5000','a3be03d1-4ed4-427c-a31c-12f6f69ddd30') { 
-def customImage = docker.build("my-image:latest")
-
-        /* Push the container to the custom Registry */
-        customImage.push()
-//      echo "Hello"
-    }
+                        docker.withRegistry('http://192.168.100.109:5000','a3be03d1-4ed4-427c-a31c-12f6f69ddd30') { 
+                                def customImage = docker.build("my-image:latest")
+                                customImage.push()
+                        }
                 }
 
             }
