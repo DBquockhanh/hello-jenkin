@@ -20,7 +20,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 script{
-                        docker.withRegistry('http://192.168.100.109:5000','a3be03d1-4ed4-427c-a31c-12f6f69ddd30') { 
+                        docker.withRegistry('https://d444-2001-ee0-4f95-67a0-79f6-e3e2-154d-eed3.ngrok-free.app','a3be03d1-4ed4-427c-a31c-12f6f69ddd30') { 
                                 def customImage = docker.build("my-image:latest")
                                 customImage.push()
                         }
